@@ -25,17 +25,45 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 
 	public T removeFirst() {
 	// Elimina el primer elemento de la lista
-        // Precondición:
-		    // COMPLETAR EL CODIGO Y CALCULAR EL COSTE
-        
+        // Precondici�n: la lista no vacía
+		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+
+        T result=null;
+        if (!isEmpty()) {
+            if (last.next == last) { // solo un elemento
+                result = last.data;
+                last = null;
+            } else {
+                Node<T> first = last.next;
+                result = first.data;
+                last.next = first.next;
+                first.next.prev =last;
+
+            }
+            count--;
+        }
+       return result;
 	}
 
 	public T removeLast() {
 	// Elimina el último elemento de la lista
-        // Precondición:
+            // Precondici�n: Lista no vacía
 			// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
-
-		   }
+        T result=last.data;
+        if (!isEmpty()) {
+            if (last.next == last) { //solo un elemento
+                last = null; //lista vacía
+            }
+            else {
+                Node<T> nuevo = last.prev;
+                nuevo.next= last.next;
+                last.next.prev = nuevo;
+                last=nuevo;
+            }
+            count--;
+        }
+        return result;
+    }
 
 
 	public T remove(T elem) {
@@ -51,11 +79,15 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	public T first() {
 	//Da acceso al primer elemento de la lista
 	      // COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+		 if (isEmpty()) {return null;}
+        else{return last.next.data;}
 	}
 
 	public T last() {
 	//Da acceso al último elemento de la lista
 	      // COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+		if (isEmpty()){return null}
+		else {return last.data};
 	}
 
 	public DoubleLinkedList<T> clone(){
@@ -81,11 +113,13 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	public boolean isEmpty(){ 
 	//Determina si la lista est� vac�a
 	 // COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+		return (count==0);
 }
 	
 	public int size(){ 
 	//Determina el n�mero de elementos de la lista
 	 // COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+		return count;
 }
 	
 	/** Return an iterator to the stack that iterates through the items . */ 
@@ -117,3 +151,4 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		}
 
 }
+
