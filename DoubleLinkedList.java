@@ -23,90 +23,202 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	  return descr;
 	}
 
-	public T removeFirst() {
-	// Elimina el primer elemento de la lista
+	   public T removeFirst() {
+        // Elimina el primer elemento de la lista
         // Precondici�n: la lista no vacía
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
-
-        T result=null;
-        if (!isEmpty()) {
-            if (last.next == last) { // solo un elemento
-                result = last.data;
-                last = null;
-            } else {
-                Node<T> first = last.next;
-                result = first.data;
-                last.next = first.next;
-                first.next.prev =last;
-
-            }
-            count--;
+        // COMPLETAR EL CODIGO Y CALCULAR EL COSTE: constante O(1)
+        if (isEmpty()) {
+            return null;
         }
-       return result;
-	}
-
-	public T removeLast() {
-	// Elimina el último elemento de la lista
-            // Precondici�n: Lista no vacía
-			// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
-        T result=last.data;
-        if (!isEmpty()) {
-            if (last.next == last) { //solo un elemento
-                last = null; //lista vacía
-            }
-            else {
-                Node<T> nuevo = last.prev;
-                nuevo.next= last.next;
-                last.next.prev = nuevo;
-                last=nuevo;
-            }
-            count--;
+        T result = last.next.data;
+        if (last.next == last) { // solo un elemento
+            last = null;
         }
+        else {
+            Node<T> first = last.next;
+           first.next.prev=last;
+           last.next=first.next;
+        }
+        count--;
+        return result;
+    }
+
+ public T removeLast() {
+        // Elimina el último elemento de la lista
+        // Precondici�n: Lista no vacía
+        // COMPLETAR EL CODIGO Y CALCULAR EL COSTE : constante O(1)
+        if (isEmpty()) {
+            return null;
+        }
+        T result = last.data;
+        if (last.next == last) { //solo un elemento
+            last = null; //lista vacía
+        }
+        else {
+            last.prev.next = last.next;
+            last.next.prev = last.prev;
+            last = last.prev;
+        }
+        count--;
         return result;
     }
 
 
-	public T remove(T elem) {
-	//Elimina un elemento concreto de la lista
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
-	}
+public T remove(T elem) {
+        //Elimina un elemento concreto de la lista
+        // COMPLETAR EL CODIGO Y CALCULAR EL COSTE: coste lineal O(n) , recorre toda la lista en el caso peor
+        if (isEmpty()) {
+            return null;
+        }
+        if (last.next == last) {//un elemento
+            if (last.data.equals(elem)) {
+                T result = last.data;
+                last = null;
+                count--;
+                return result;
+            }
+            return null;
+        }
+
+        Boolean enc = false;
+        Node<T> aux = last.next;
+        while (aux != last && !enc) {
+            if (aux.data.equals(elem)) {
+                aux.next.prev = aux.prev;
+                aux.prev.next = aux.next;
+                enc = true;
+                count--;
+                return aux.data;
+            }
+            aux = aux.next;
+
+        }
+        if (!enc && last.data.equals(elem)) {
+            T result = last.data;
+            last.next.prev = last.prev;
+            last.prev.next = last.next;
+            last = last.prev;
+            count--;
+            return result;
+
+        }
+        return null;
+    }
+
 	
 	public void removeAll(T elem) {
 	//Elimina todas las apariciones de un elemento de la lista
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE: conste lineal O(n) , recorre toda la lista
+        if (isEmpty()) {return;}
+        if (last.next == last) {//un elemento
+            if (last.data.equals(elem)) {
+                last = null;
+                count--;
+            }
+        }
+        Node<T> aux = last.next; // primer elemento
+        while (aux != last ) { //toda la lista menos ultimo
+            if (aux.data.equals(elem)) {
+                aux.prev.next = aux.next;
+                aux.next.prev = aux.prev;
+                count--;
+            }
+            aux = aux.next;
+
+        }
+        if (last.data.equals(elem)) {
+            if (count==1){
+                last = null;
+            }
+            else{
+                last.prev.next=last.next;
+                last.next.prev=last.prev;
+                last=last.prev;
+            }
+            count--;
+        }
+
+
 	}
 
 	public T first() {
 	//Da acceso al primer elemento de la lista
-	      // COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+	      // COMPLETAR EL CODIGO Y CALCULAR EL COSTE: constante O(1)
 		 if (isEmpty()) {return null;}
         else{return last.next.data;}
 	}
 
 	public T last() {
 	//Da acceso al último elemento de la lista
-	      // COMPLETAR EL CODIGO Y CALCULAR EL COSTE
-		if (isEmpty()){return null}
-		else {return last.data};
+	      // COMPLETAR EL CODIGO Y CALCULAR EL COSTE: constante O(1)
+		if (isEmpty()){return null;}
+		else {return last.data;}
 	}
 
 	public DoubleLinkedList<T> clone(){
 		// Devuelve una copia de la lista (no duplica el puntero)
 		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+        DoubleLinkedList<T> copia = new DoubleLinkedList<>();
+        if (isEmpty()){return copia;}
+        Node<T> aux = last.next;
+        while (aux != last){
+            //falta hacer
+
+        }
+        copia.setDescr(this.descr);
+        return copia;
+
 	} 
 
 
 	public boolean contains(T elem) {
 	//Determina si la lista contiene un elemento concreto
-		      if (isEmpty())
-		          return false;
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE: en el peor caso recorre toda la lista, coste O(n)
+
+        if (isEmpty()){
+            return false;
+        }
+        Boolean enc = false;
+        Node<T> aux = last.next;
+        while(aux!=last && !enc)
+            {
+                if(aux.data.equals(elem) )
+                {
+                    enc = true;
+                    return true;
+                }
+                aux = aux.next;
+
+            }
+        if (!enc && last.data.equals(elem)){
+            return true;
+        }
+        return false;
+
 		      
 	}
 
 	public T find(T elem) {
 	//Determina si la lista contiene un elemento concreto, y develve su referencia, null en caso de que no est�
 		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+        if (isEmpty()){return null;}
+        Node<T> aux = last.next;
+        Boolean enc = false;
+        while (aux!=last && !enc)
+        {
+            if (aux.data.equals(elem))
+            {
+                enc = true;
+                return aux.data;
+            }
+            aux = aux.next;
+        }
+        if (!enc && last.data.equals(elem))
+        {
+            return last.data;
+        }
+        return null;
+
 
 	}
 
