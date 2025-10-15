@@ -3,7 +3,7 @@ import java.util.Iterator;
 
 public class PruebaDoubleLinkedList {
 	
-	public static void visualizarNodos(UnorderedCircularLiDoublenkedList<Integer> l) {
+	public static void visualizarNodos(UnorderedDoubleLinkedList<Integer> l) {
 		Iterator<Integer> it = l.iterator();
 		System.out.println();
 		while (it.hasNext()) {
@@ -15,7 +15,7 @@ public class PruebaDoubleLinkedList {
 	
 	public static void main(String[] args)  {
 		
-		UnorderedCircularDoubleLinkedList<Integer> l = new UnorderedCircularDoubleLinkedList<Integer>();
+		UnorderedDoubleLinkedList<Integer> l = new UnorderedDoubleLinkedList<Integer>();
 		l.addToRear(1);
 		l.addToRear(3);
 		l.addToRear(6);
