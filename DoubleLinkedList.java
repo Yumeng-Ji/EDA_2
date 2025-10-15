@@ -3,27 +3,27 @@ import java.util.NoSuchElementException;
 
 public class DoubleLinkedList<T> implements ListADT<T> {
 
-	// Atributos
-	protected Node<T> last;  // apuntador al último
-	protected String descr;  // descripción
-	protected int count;
+    // Atributos
+    protected Node<T> last;  // apuntador al último
+    protected String descr;  // descripción
+    protected int count;
 
-	// Constructor
-	public DoubleLinkedList() {
-        	last = null;
-		descr = "";
-		count = 0;
-	}
-	
-	public void setDescr(String nom) {
-	  descr = nom;
-	}
+    // Constructor
+    public DoubleLinkedList() {
+        last = null;
+        descr = "";
+        count = 0;
+    }
 
-	public String getDescr() {
-	  return descr;
-	}
+    public void setDescr(String nom) {
+        descr = nom;
+    }
 
-	   public T removeFirst() {
+    public String getDescr() {
+        return descr;
+    }
+
+    public T removeFirst() {
         // Elimina el primer elemento de la lista
         // Precondici�n: la lista no vacía
         // COMPLETAR EL CODIGO Y CALCULAR EL COSTE: constante O(1)
@@ -43,7 +43,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
         return result;
     }
 
- public T removeLast() {
+    public T removeLast() {
         // Elimina el último elemento de la lista
         // Precondici�n: Lista no vacía
         // COMPLETAR EL CODIGO Y CALCULAR EL COSTE : constante O(1)
@@ -64,7 +64,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
     }
 
 
-public T remove(T elem) {
+    public T remove(T elem) {
         //Elimina un elemento concreto de la lista
         // COMPLETAR EL CODIGO Y CALCULAR EL COSTE: coste lineal O(n) , recorre toda la lista en el caso peor
         if (isEmpty()) {
@@ -157,13 +157,22 @@ public T remove(T elem) {
 
 	public DoubleLinkedList<T> clone(){
 		// Devuelve una copia de la lista (no duplica el puntero)
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE : coste lineal O(n)
         DoubleLinkedList<T> copia = new DoubleLinkedList<>();
         if (isEmpty()){return copia;}
-        Node<T> aux = last.next;
-        while (aux != last){
-            //falta hacer
-
+        Node<T> aux = last.prev;
+        copia.last = new Node<T>(last.data);
+        copia.last.next = copia.last;
+        copia.last.prev = copia.last;
+        Node<T> copy = copia.last;
+        while (aux != last){ // mismo metodo que add to rear
+            Node <T> elem = new Node<T> (aux.data);
+            elem.prev= copia.last;
+            elem.next= copy;
+            copy.prev = elem;
+            copia.last.next = elem;
+            aux = aux.prev;
+            copy = copy.prev;
         }
         copia.setDescr(this.descr);
         return copia;
@@ -200,7 +209,7 @@ public T remove(T elem) {
 
 	public T find(T elem) {
 	//Determina si la lista contiene un elemento concreto, y develve su referencia, null en caso de que no est�
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE : lineal O(n)
         if (isEmpty()){return null;}
         Node<T> aux = last.next;
         Boolean enc = false;
@@ -224,13 +233,13 @@ public T remove(T elem) {
 
 	public boolean isEmpty(){ 
 	//Determina si la lista est� vac�a
-	 // COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+	 // COMPLETAR EL CODIGO Y CALCULAR EL COSTE : constante O(1)
 		return (count==0);
 }
 	
 	public int size(){ 
 	//Determina el n�mero de elementos de la lista
-	 // COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+	 // COMPLETAR EL CODIGO Y CALCULAR EL COSTE : constante O(1)
 		return count;
 }
 	
@@ -238,7 +247,35 @@ public T remove(T elem) {
 	public Iterator<T> iterator() { return new ListIterator(); } 
 
 	   // an iterator, doesn't implement remove() since it's optional 
-	   private class ListIterator implements Iterator<T> { 
+	   private class ListIterator implements Iterator<T> {
+        private Node<T> actual;
+        private int recorrido;
+
+        public ListIterator() { // coste constante O(1)
+           if (!isEmpty()){
+            actual=last.next;
+            recorrido=0;}
+           else{
+               actual=null;
+           }
+        }
+        public boolean hasNext() { //coste constante O(1)
+          if (actual!=null && recorrido<count){
+              return true;
+          }
+          return false;
+        }
+        public T next() { //coste constante O(1)
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            T RESULT = actual.data;
+            actual = actual.next;
+            recorrido++;
+            return RESULT;
+
+        }
+        public void remove() {}
 
 		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
 
