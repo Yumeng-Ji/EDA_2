@@ -25,7 +25,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 
     public T removeFirst() {
         // Elimina el primer elemento de la lista
-        // Precondici�n: la lista no vacía
+        // Precondición: la lista no vacía
         // COMPLETAR EL CODIGO Y CALCULAR EL COSTE: constante O(1)
         if (isEmpty()) {
             return null;
@@ -45,7 +45,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 
     public T removeLast() {
         // Elimina el último elemento de la lista
-        // Precondici�n: Lista no vacía
+        // Precondición: Lista no vacía
         // COMPLETAR EL CODIGO Y CALCULAR EL COSTE : constante O(1)
         if (isEmpty()) {
             return null;
@@ -208,7 +208,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	}
 
 	public T find(T elem) {
-	//Determina si la lista contiene un elemento concreto, y develve su referencia, null en caso de que no est�
+	//Determina si la lista contiene un elemento concreto, y develve su referencia, null en caso de que no está
 		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE : lineal O(n)
         if (isEmpty()){return null;}
         Node<T> aux = last.next;
@@ -232,13 +232,13 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	}
 
 	public boolean isEmpty(){ 
-	//Determina si la lista est� vac�a
+	//Determina si la lista está vacía
 	 // COMPLETAR EL CODIGO Y CALCULAR EL COSTE : constante O(1)
 		return (count==0);
 }
 	
 	public int size(){ 
-	//Determina el n�mero de elementos de la lista
+	//Determina el número de elementos de la lista
 	 // COMPLETAR EL CODIGO Y CALCULAR EL COSTE : constante O(1)
 		return count;
 }
@@ -300,4 +300,5 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		}
 
 }
+
 
