@@ -41,11 +41,47 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
        count++;
 	}
 	
-	public OrderedDoubleLinkedList<T> intersection(OrderedDoubleLinkedList<T> lista){
-		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
+	 public OrderedDoubleLinkedList<T> intersection(OrderedDoubleLinkedList<T> lista) {
+		 //el coste es O(n+m) porque recorre toda la lista  1 y 2 en el peor caso ,
+		 //donde n es el numero de elements de this & m es el numero de elementos de la lista
+        OrderedDoubleLinkedList<T> intersection = new OrderedDoubleLinkedList<>();
+
+        if (this.last == null || lista.last == null) {
+            return intersection;
+        }
+
+        Node<T> aux = this.last.next;
+        Node<T> actual = lista.last.next;
+       boolean auxTerminado = false;
+       boolean actualTerminado = false;
+        int iterAux = 0;
+        int iterAct=0;
+        int maxAux = this.size();
+        int maxAct = lista.size();
+
+        while((iterAux < maxAux) && (iterAct < maxAct)) {
+            int compare = actual.data.compareTo(aux.data);
+            System.out.println("Comparing "+aux.data+" to "+actual.data);
+            if (compare == 0) {
+                intersection.add(actual.data);
+                actual = actual.next;
+                aux = aux.next;
+                iterAux++;
+                iterAct++;
+            } else if (compare > 0) {
+                aux = aux.next;
+                iterAux++;
+
+            } else if (compare < 0) {
+               actual = actual.next;
+               iterAct++;
+            }
+        }
 
 
-	}
+        return intersection;
+    }
 
 }
+
 
