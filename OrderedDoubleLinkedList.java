@@ -61,9 +61,22 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
 
         while((iterAux < maxAux) && (iterAct < maxAct)) {
             int compare = actual.data.compareTo(aux.data);
-            System.out.println("Comparing "+aux.data+" to "+actual.data);
+            System.out.println("Comparing "+actual.data+" to "+aux.data);
             if (compare == 0) {
-                intersection.add(actual.data);
+				Node <T> dato = new Node (aux.data);
+				if (intersection.isEmpty())
+				{
+					intersection.last= dato;
+					intersection.last.next=last;
+					intersection.last.prev=last;
+				}
+                else{
+					dato.prev=intersection.last;
+					dato.next=intersection.last.next;
+					intersection.last.next.prev=dato;
+					intersection.last.next=dato;
+					intersection.last=dato;
+				}
                 actual = actual.next;
                 aux = aux.next;
                 iterAux++;
@@ -83,5 +96,6 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
     }
 
 }
+
 
 
