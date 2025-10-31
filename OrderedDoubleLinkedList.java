@@ -66,9 +66,9 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
 				Node <T> dato = new Node (aux.data);
 				if (intersection.isEmpty())
 				{
-					intersection.last= dato;
-					intersection.last.next=last;
-					intersection.last.prev=last;
+					dato.next=dato;
+					dato.prev=dato;
+                    intersection.last= dato;
 				}
                 else{
 					dato.prev=intersection.last;
@@ -96,6 +96,7 @@ public class OrderedDoubleLinkedList<T extends Comparable<T>> extends DoubleLink
     }
 
 }
+
 
 
 
