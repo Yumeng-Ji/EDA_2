@@ -26,17 +26,23 @@ public class PruebaDoubleLinkedList {
 		l.remove(new Integer(7));
 
 		
-		System.out.print(" Lista ...............");
+		System.out.print("Lista ...............");
 		visualizarNodos(l);
-		System.out.println(" Num elementos: " + l.size());
+		System.out.println("Num elementos: " + l.size());
 
 
 		System.out.println("Prueba Find ...............");
 		System.out.println("9? " + l.find(9));
 		System.out.println("0? " + l.find(0));
 		System.out.println("7? " + l.find(7));
+        System.out.println("2? " + l.find (2)) ;
+        System.out.println("Last? " + l.last()) ;
+        System.out.println("First? " + l.first()) ;
+        System.out.println("Second? " + l.last.next.next.data) ;
+        System.out.println("Last? " + l.last.next.prev.data);
         System.out.println();
 
+        
         // Pruebas addToFront
         System.out.println("Prueba addToFront ...............");
 
